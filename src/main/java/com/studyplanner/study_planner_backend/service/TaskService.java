@@ -1,10 +1,12 @@
 package com.studyplanner.study_planner_backend.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.studyplanner.study_planner_backend.entity.Task;
+import com.studyplanner.study_planner_backend.exception.ResourceNotFoundException;
 import com.studyplanner.study_planner_backend.repository.TaskRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,7 @@ public class TaskService {
 
     public Task getTaskById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
     }
 
     public Task updateTask(Long id, Task updatedTask) {
@@ -47,7 +49,7 @@ public class TaskService {
     public Task markCompleted(Long id) {
 
         Task task = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
 
         task.setCompleted(true);
 
@@ -64,5 +66,22 @@ public class TaskService {
 
     public List<Task> getCompletedTasks() {
         return repository.findByCompletedTrue();
+    }
+
+    public List<Task> searchTasks(String keyword) {
+        return repository.findByTitleContainingIgnoreCase(keyword);
+    }
+
+    public List<Task> getTasksByPriority(Integer priority) {
+        return repository.findByPriority(priority);
+    }
+
+    public List<Task> getTasksDueToday() {
+        return repository.findByDueDate(LocalDate.now());
+    }
+
+    public List<Task> getOverdueTasks() {
+        return repository.findByDueDateBeforeAndCompletedFalse(
+                LocalDate.now());
     }
 }

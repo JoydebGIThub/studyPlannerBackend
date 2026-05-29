@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.studyplanner.study_planner_backend.entity.Subject;
+import com.studyplanner.study_planner_backend.exception.ResourceNotFoundException;
 import com.studyplanner.study_planner_backend.repository.SubjectRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class SubjectService {
 
     public Subject getSubjectById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subject not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Subject not found"));
     }
 
     public Subject saveSubject(Subject subject) {

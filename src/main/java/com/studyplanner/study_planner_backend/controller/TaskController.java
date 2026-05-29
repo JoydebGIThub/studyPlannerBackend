@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.studyplanner.study_planner_backend.entity.Task;
@@ -72,5 +73,25 @@ public class TaskController {
     @GetMapping("/completed")
     public List<Task> getCompletedTasks() {
         return service.getCompletedTasks();
+    }
+
+    @GetMapping("/search")
+    public List<Task> searchTasks(@RequestParam String keyword) {
+        return service.searchTasks(keyword);
+    }
+
+    @GetMapping("/priority/{priority}")
+    public List<Task> getTasksByPriority(@PathVariable Integer priority) {
+        return service.getTasksByPriority(priority);
+    }
+
+    @GetMapping("/due-today")
+    public List<Task> getTasksDueToday() {
+        return service.getTasksDueToday();
+    }
+
+    @GetMapping("/overdue")
+    public List<Task> getOverdueTasks() {
+        return service.getOverdueTasks();
     }
 }
