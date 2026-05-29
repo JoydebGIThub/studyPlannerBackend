@@ -13,6 +13,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Task title is required")
     private String title;
 
     @ManyToOne
@@ -36,8 +37,10 @@ public class Task {
 
     private LocalDate dueDate;
 
+    @NotNull(message = "Priority is required")
     private Integer priority;
 
+    @NotNull(message = "Completion status is required")
     private Boolean completed;
 
     private LocalDateTime createdAt;

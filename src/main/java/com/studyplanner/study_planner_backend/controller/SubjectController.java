@@ -41,7 +41,7 @@ public class SubjectController {
 
     @PutMapping("/{id}")
     public Subject update(@PathVariable Long id,
-                          @RequestBody Subject subject) {
+                          @Valid @RequestBody Subject subject) {
         return service.updateSubject(id, subject);
     }
 
